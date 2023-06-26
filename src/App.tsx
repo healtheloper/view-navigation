@@ -1,12 +1,18 @@
-import { useState } from 'react';
 import './App.css';
+import Screen from './components/Navigator/Screen';
+import Stack from './components/Navigator/Stack';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div>
-      <div>hello {count}</div>
+      <Stack>
+        <Screen name='first'>
+          <div>1</div>
+        </Screen>
+        <Screen name='second'>
+          <div>2</div>
+        </Screen>
+      </Stack>
     </div>
   );
 }
