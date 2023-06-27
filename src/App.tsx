@@ -1,16 +1,18 @@
 import './App.css';
 import Screen from './components/Navigator/Screen';
 import Stack from './components/Navigator/Stack';
+import First from './pages/First';
+import Second from './pages/Second';
 
 function App() {
   return (
     <div>
       <Stack>
-        <Screen name='first'>
-          <div>1</div>
+        <Screen name='First'>
+          <First />
         </Screen>
-        <Screen name='second'>
-          <div>2</div>
+        <Screen name='Second'>
+          <Second />
         </Screen>
       </Stack>
     </div>
