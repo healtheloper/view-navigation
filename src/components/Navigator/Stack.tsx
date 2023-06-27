@@ -1,11 +1,7 @@
-import {
-  ComponentPropsWithoutRef,
-  ReactElement,
-  createContext,
-  useState,
-} from 'react';
+import { ComponentPropsWithoutRef, ReactElement, createContext } from 'react';
 import { styled } from 'styled-components';
 import Button from '../Button';
+import useStorageState from '../../hooks/useStorageState';
 
 type StackProps = {
   children: ReactElement[];
@@ -21,8 +17,10 @@ export const ViewNavigationHistoryContext =
 
 const Stack = (props: StackProps) => {
   const { children } = props;
-  const initHistory = [children[0].props.name];
-  const [history, setHistory] = useState(initHistory);
+  const initHistory = [children[0].props.name] as string[];
+  const [history, setHistory] = useStorageState('history', {
+    defaultValue: initHistory,
+  });
   const isHistoryOnly = history.length === 1;
 
   const targetScreen = children.find(
