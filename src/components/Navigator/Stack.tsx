@@ -2,9 +2,10 @@ import {
   ComponentPropsWithoutRef,
   ReactElement,
   createContext,
-  useMemo,
   useState,
 } from 'react';
+import { styled } from 'styled-components';
+import Button from '../Button';
 
 type StackProps = {
   children: ReactElement[];
@@ -39,13 +40,24 @@ const Stack = (props: StackProps) => {
 
   return (
     <ViewNavigationHistoryContext.Provider value={actions}>
-      <div>
-        {!isHistoryOnly && <button onClick={actions.pop}>{'<'}</button>}
+      <StackHeader>
+        {!isHistoryOnly && <Button onClick={actions.pop}>{'<'}</Button>}
         <h1>{targetScreen?.props.name}</h1>
-      </div>
+      </StackHeader>
       {targetScreen}
     </ViewNavigationHistoryContext.Provider>
   );
 };
+
+const StackHeader = styled.header`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 1rem;
+  width: 100%;
+  button {
+    margin-right: 1rem;
+  }
+`;
 
 export default Stack;

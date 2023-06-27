@@ -6,16 +6,14 @@ import Second from './pages/Second';
 
 function App() {
   return (
-    <div>
-      <Stack>
-        <Screen name='First'>
-          <First />
-        </Screen>
-        <Screen name='Second'>
-          <Second />
-        </Screen>
-      </Stack>
-    </div>
+    <Stack>
+      <Screen name='First'>
+        <First />
+      </Screen>
+      <Screen name='Second'>
+        <Second />
+      </Screen>
+    </Stack>
   );
 }
 

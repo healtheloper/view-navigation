@@ -1,3 +1,4 @@
+import Button from '../components/Button';
 import { useViewNavHistoryAction } from '../components/Navigator/useViewNavHistoryAction';
 
 const Second = () => {
@@ -6,13 +7,13 @@ const Second = () => {
   return (
     <div>
       <span>This is Second</span>
-      <button
+      <Button
         onClick={() => {
           push('First');
         }}
       >
         Push First
-      </button>
+      </Button>
     </div>
   );
 };
