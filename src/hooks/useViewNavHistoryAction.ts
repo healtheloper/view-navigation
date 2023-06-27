@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ViewNavigationHistoryContext } from './Stack';
+import { ViewNavigationHistoryContext } from '../components/Navigator/Stack';
 
 export const useViewNavHistoryAction = () => {
   const context = useContext(ViewNavigationHistoryContext);

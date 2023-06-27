@@ -1,5 +1,5 @@
 import Button from '../components/Button';
-import { useViewNavHistoryAction } from '../components/Navigator/useViewNavHistoryAction';
+import { useViewNavHistoryAction } from '../hooks/useViewNavHistoryAction';
 
 const Second = () => {
   const { push } = useViewNavHistoryAction();
