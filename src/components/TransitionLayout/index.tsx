@@ -1,4 +1,5 @@
 import FadeLayout from './FadeLayout';
+import SlideLayout from './SlideLayout';
 import { TransitionLayoutProps } from './transition-layout.types';
 
 const TransitionLayout = (props: TransitionLayoutProps) => {
@@ -6,6 +7,10 @@ const TransitionLayout = (props: TransitionLayoutProps) => {
   switch (type) {
     case 'fade':
       return <FadeLayout transitionKey={transitionKey}>{children}</FadeLayout>;
+    case 'slide':
+      return (
+        <SlideLayout transitionKey={transitionKey}>{children}</SlideLayout>
+      );
     case 'none':
       return <>{children}</>;
     default:

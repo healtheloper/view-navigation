@@ -59,7 +59,6 @@ const Stack = (props: StackProps) => {
 const StackHeader = styled.header`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid lightgray;
   margin-bottom: 1rem;
   width: 100%;
   button {
