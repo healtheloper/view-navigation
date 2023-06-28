@@ -1,9 +1,13 @@
 import { ComponentPropsWithoutRef, ReactElement, createContext } from 'react';
 import { styled } from 'styled-components';
+
 import Button from '../Button';
 import useStorageState from '../../hooks/useStorageState';
+import TransitionLayout from '../TransitionLayout';
+import { TransitionOption } from '../TransitionLayout/transition-layout.types';
 
 type StackProps = {
+  transitionOption?: TransitionOption;
   children: ReactElement[];
 } & ComponentPropsWithoutRef<'div'>;
 
@@ -16,7 +20,7 @@ export const ViewNavigationHistoryContext =
   createContext<ViewNavigationHistoryActions | null>(null);
 
 const Stack = (props: StackProps) => {
-  const { children } = props;
+  const { children, transitionOption = { type: 'fade' } } = props;
   const initHistory = [children[0].props.name] as string[];
   const [history, setHistory] = useStorageState('history', {
     defaultValue: initHistory,
@@ -38,11 +42,16 @@ const Stack = (props: StackProps) => {
 
   return (
     <ViewNavigationHistoryContext.Provider value={actions}>
-      <StackHeader>
-        {!isHistoryOnly && <Button onClick={actions.pop}>{'<'}</Button>}
-        <h1>{targetScreen?.props.name}</h1>
-      </StackHeader>
-      {targetScreen}
+      <TransitionLayout
+        type={transitionOption.type}
+        transitionKey={history[history.length - 1]}
+      >
+        <StackHeader>
+          {!isHistoryOnly && <Button onClick={actions.pop}>{'<'}</Button>}
+          <h1>{targetScreen?.props.name}</h1>
+        </StackHeader>
+        {targetScreen}
+      </TransitionLayout>
     </ViewNavigationHistoryContext.Provider>
   );
 };
