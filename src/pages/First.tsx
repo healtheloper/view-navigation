@@ -1,15 +1,18 @@
 import Button from '../components/Button';
-import { useViewNavHistoryAction } from '../hooks/useViewNavHistoryAction';
 
-const First = () => {
-  const { push } = useViewNavHistoryAction();
+type FirstProps = {
+  onNext: (screenName: string) => void;
+};
+
+const First = (props: FirstProps) => {
+  const { onNext } = props;
 
   return (
     <div>
       <span>This is First</span>
       <Button
         onClick={() => {
-          push('Second');
+          onNext('Second');
         }}
       >
         Push Second

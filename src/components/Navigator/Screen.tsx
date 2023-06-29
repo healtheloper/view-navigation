@@ -6,6 +6,7 @@ type ScreenProps = {
 
 const Screen = (props: ScreenProps) => {
   const { children } = props;
+
   return <>{children}</>;
 };
 

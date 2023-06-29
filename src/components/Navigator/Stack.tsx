@@ -1,4 +1,10 @@
-import { ComponentPropsWithoutRef, ReactElement, createContext } from 'react';
+import {
+  ComponentPropsWithoutRef,
+  ReactElement,
+  Ref,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { styled } from 'styled-components';
 
 import Button from '../Button';
@@ -11,37 +17,36 @@ type StackProps = {
   children: ReactElement[];
 } & ComponentPropsWithoutRef<'div'>;
 
-type ViewNavigationHistoryActions = {
+export type ViewNavigationHistoryActions = {
   push: (screenName: string) => void;
   pop: () => void;
 };
 
-export const ViewNavigationHistoryContext =
-  createContext<ViewNavigationHistoryActions | null>(null);
+const Stack = forwardRef(
+  (props: StackProps, ref: Ref<ViewNavigationHistoryActions>) => {
+    const { children, transitionOption = { type: 'fade' } } = props;
+    const initHistory = [children[0].props.name] as string[];
+    const [history, setHistory] = useStorageState('history', {
+      defaultValue: initHistory,
+    });
+    const isHistoryOnly = history.length === 1;
 
-const Stack = (props: StackProps) => {
-  const { children, transitionOption = { type: 'fade' } } = props;
-  const initHistory = [children[0].props.name] as string[];
-  const [history, setHistory] = useStorageState('history', {
-    defaultValue: initHistory,
-  });
-  const isHistoryOnly = history.length === 1;
+    const targetScreen = children.find(
+      (child) => child.props.name === history[history.length - 1]
+    );
 
-  const targetScreen = children.find(
-    (child) => child.props.name === history[history.length - 1]
-  );
+    const actions = {
+      push: (screenName: string) => {
+        setHistory((prev) => [...prev, screenName]);
+      },
+      pop: () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1));
+      },
+    };
 
-  const actions = {
-    push: (screenName: string) => {
-      setHistory((prev) => [...prev, screenName]);
-    },
-    pop: () => {
-      setHistory((prev) => prev.slice(0, prev.length - 1));
-    },
-  };
+    useImperativeHandle(ref, () => actions);
 
-  return (
-    <ViewNavigationHistoryContext.Provider value={actions}>
+    return (
       <TransitionLayout
         type={transitionOption.type}
         transitionKey={history[history.length - 1]}
@@ -52,9 +57,9 @@ const Stack = (props: StackProps) => {
         </StackHeader>
         {targetScreen}
       </TransitionLayout>
-    </ViewNavigationHistoryContext.Provider>
-  );
-};
+    );
+  }
+);
 
 const StackHeader = styled.header`
   display: flex;
