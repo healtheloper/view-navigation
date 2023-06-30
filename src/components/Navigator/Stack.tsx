@@ -3,7 +3,6 @@ import {
   ReactElement,
   Ref,
   forwardRef,
-  useEffect,
   useImperativeHandle,
 } from 'react';
 import { styled } from 'styled-components';
@@ -20,7 +19,7 @@ type StackProps = {
 } & ComponentPropsWithoutRef<'div'>;
 
 export type ViewNavigationHistoryActions = {
-  push: (screenName: string, component: ReactElement) => void;
+  push: (component: ReactElement) => void;
   pop: () => void;
 };
 
@@ -42,9 +41,9 @@ const Stack = forwardRef(
     const targetScreen = screens[screenName] || children;
 
     const actions = {
-      push: (screenName: string, component: ReactElement) => {
-        screens[screenName] = component;
-        setHistory((prev) => [...prev, screenName]);
+      push: (component: ReactElement) => {
+        screens[component.props.name] = component;
+        setHistory((prev) => [...prev, component.props.name]);
       },
       pop: () => {
         setHistory((prev) => prev.slice(0, prev.length - 1));

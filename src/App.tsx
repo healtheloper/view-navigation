@@ -8,13 +8,13 @@ import First from './pages/First';
 function App() {
   const stackRef = useRef<ViewNavigationHistoryActions>(null);
 
-  const handleHistoryPush = (screenName: string, component: ReactElement) => {
-    stackRef.current?.push(screenName, component);
+  const handleHistoryPush = (component: ReactElement) => {
+    stackRef.current?.push(component);
   };
 
   return (
     <Stack ref={stackRef} initHistory='First'>
-      <First onNext={handleHistoryPush} />
+      <First name='First' onNext={handleHistoryPush} />
     </Stack>
   );
 }

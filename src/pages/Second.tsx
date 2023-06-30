@@ -3,7 +3,8 @@ import Button from '../components/Button';
 import First from './First';
 
 type SecondProps = {
-  onNext: (screenName: string, component: ReactElement) => void;
+  name: string;
+  onNext: (component: ReactElement) => void;
 };
 
 const Second = (props: SecondProps) => {
@@ -14,7 +15,7 @@ const Second = (props: SecondProps) => {
       <span>This is Second</span>
       <Button
         onClick={() => {
-          onNext('First', <First onNext={onNext} />);
+          onNext(<First name='First' onNext={onNext} />);
         }}
       >
         Push First
