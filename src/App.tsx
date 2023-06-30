@@ -1,12 +1,10 @@
 import { ReactElement, useRef } from 'react';
 import './App.css';
-import Stack, {
-  ViewNavigationHistoryActions,
-} from './components/Navigator/Stack';
+import Stack, { StackActions } from './components/Navigator/Stack';
 import First from './pages/First';
 
 function App() {
-  const stackRef = useRef<ViewNavigationHistoryActions>(null);
+  const stackRef = useRef<StackActions>(null);
 
   const handleHistoryPush = (component: ReactElement) => {
     stackRef.current?.push(component);

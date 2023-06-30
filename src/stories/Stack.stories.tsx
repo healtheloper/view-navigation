@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Stack from '../components/Navigator/Stack';
-import Screen from '../components/Navigator/Screen';
+import Stack, { StackActions } from '../components/Navigator/Stack';
 import First from '../pages/First';
-import Second from '../pages/Second';
+import { ReactElement, useRef } from 'react';
 
 const meta: Meta<typeof Stack> = {
   component: Stack,
@@ -12,17 +11,22 @@ const meta: Meta<typeof Stack> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const StackTemplate: Story = {
-  render: ({ ...args }) => (
-    <Stack {...args}>
-      <Screen name='First'>
-        <First />
-      </Screen>
-      <Screen name='Second'>
-        <Second />
-      </Screen>
+const StackTemplateView = ({ ...args }) => {
+  const stackRef = useRef<StackActions>(null);
+
+  const handleHistoryPush = (component: ReactElement) => {
+    stackRef.current?.push(component);
+  };
+
+  return (
+    <Stack {...args} ref={stackRef} initHistory='First'>
+      <First name='First' onNext={handleHistoryPush} />
     </Stack>
-  ),
+  );
+};
+
+export const StackTemplate: Story = {
+  render: StackTemplateView,
 };
 
 export const Fade = {
