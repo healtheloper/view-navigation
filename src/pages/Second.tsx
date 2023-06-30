@@ -1,11 +1,8 @@
-import { ReactElement } from 'react';
 import Button from '../components/Button';
 import First from './First';
+import { ScreenComponentProps } from '../components/Navigator/screen.types';
 
-type SecondProps = {
-  name: string;
-  onNext: (component: ReactElement) => void;
-};
+type SecondProps = ScreenComponentProps<'div'>;
 
 const Second = (props: SecondProps) => {
   const { onNext } = props;
